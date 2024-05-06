@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination Example</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="pagination.js"></script>
+
+    <script>
+        let data = [
+            {
+                "id": 1,
+                "name": "Lindsey Krugmann",
+                "age": 36,
+                "gender": "Polygender",
+                "title": "Product Engineer"
+            },
+            {
+                "id": 2,
+                "name": "Lyn Bovey",
+                "age": 20,
+                "gender": "Female",
+                "title": "GIS Technical Architect"
+            }, 
+            {
+                "id": 3,
+                "name": "Horton Jobe",
+                "age": 29,
+                "gender": "Male",
+                "title": "Cost Accountant"
+            }, 
+            {
+                "id": 4,
+                "name": "Abba Klimschak",
+                "age": 22,
+                "gender": "Male",
+                "title": "Developer IV"
+            }, 
+            {
+                "id": 5,
+                "name": "Llywellyn Boraston",
+                "age": 26,
+                "gender": "Male",
+                "title": "Technical Writer"
+            }, 
+            {
+                "id": 6,
+                "name": "Jed Inglese",
+                "age": 34,
+                "gender": "Male",
+                "title": "Software Consultant"
+            }, 
+            {
+                "id": 7,
+                "name": "Aubry Meugens",
+                "age": 19,
+                "gender": "Female",
+                "title": "Junior Executive"
+            }, 
+            {
+                "id": 8,
+                "name": "Vito Boswood",
+                "age": 44,
+                "gender": "Male",
+                "title": "Recruiter"
+            }, 
+            {
+                "id": 9,
+                "name": "Ozzy Kondrachenko",
+                "age": 47,
+                "gender": "Male",
+                "title": "Librarian"
+            }, 
+            {
+                "id": 10,
+                "name": "Jess Fallanche",
+                "age": 46,
+                "gender": "Male",
+                "title": "Recruiting Manager"
+            }
+        ];
+
+        let pagination = new Pagination(data, 5, '#root');
+    </script>
+</body>
+</html>
