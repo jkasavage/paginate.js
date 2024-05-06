@@ -306,7 +306,10 @@ class Pagination {
      */
     goTo(page) {
         this.removeTable();
-        this.render(page);
+
+        this.#currentPage = page;
+
+        this.render(this.#currentPage);
     }
 
     /**
