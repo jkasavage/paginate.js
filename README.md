@@ -5,5 +5,6 @@ Until I have time to write a full readme, please refer to the 'example.html' fil
 ** Please keep in mind that this is not fully complete and may require some fixes to fit your need.
 
 # Upcoming
-- Table Styling
+- ~~Table Styling~~
 - Search Feature
+- Add Bootstrap Based Styling
