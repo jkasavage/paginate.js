@@ -48,12 +48,52 @@ class Pagination {
      */
     #currentPage = 1;
 
-    constructor(data, page_size, element, headers = null) {
+    /**
+     * Preset Style Object
+     * 
+     * @param {Object} styles
+     */
+    #styles = {
+        'table': [
+            'width: 100%;',
+            'border-collapse: collapse;'
+        ],
+        'tr': [
+            'padding: 5px;',
+        ],
+        'th': [
+            'text-align: center;',
+            'font-weight: bold;',
+            'border: 1px solid black;'
+        ],
+        'td': [
+            'text-align: center;',
+            'border: 1px solid black;'
+        ]
+    };
+
+    /**
+     * Class Overrirde Structure
+     * 
+     * @param {Object} class
+     */
+    #class = {
+        'table': [],
+        'tr': [],
+        'th': [],
+        'td': []
+    };
+
+    constructor(data, page_size, element, headers = null, styles = null) {
         this.#data = data;
         this.#pageSize = page_size;
         this.#element = document.querySelector(element);
         this.#pageCount = Math.ceil(data.length / this.#pageSize);
         this.#headers = headers;
+
+        if(styles) {
+            this.#styles = styles;
+        }
 
         if(headers) {
             this.#cellCount = headers.length;
@@ -63,7 +103,9 @@ class Pagination {
 
         this.#template = document.createElement('table');
         this.#template.id = 'pagination-table';
-        this.#template.style.width = '100%';
+        this.#template.style = this.#styles.table.join(' ');
+
+        // ADD STYLE OVERRIDE
 
         this.render();
     }
@@ -118,16 +160,20 @@ class Pagination {
          * @param {HTMLElement} row
          */
         let row = document.createElement('tr');
+        
+        row.style = this.#styles.tr.join(' ');
 
         if(this.#headers) {
             this.#headers.forEach((header) => {
                 let cell = document.createElement('td');
+                cell.style = this.#styles.td.join(' ');
                 cell.innerText = entry[header];
                 row.appendChild(cell);
             });
         } else {
             for(const [key, value] of Object.entries(entry)) {
                 let cell = document.createElement('td');
+                cell.style = this.#styles.td.join(' ');
                 cell.innerText = value;
                 row.appendChild(cell);
             }
@@ -143,10 +189,9 @@ class Pagination {
         let headerRow = document.createElement('tr');
 
         this.#headers.forEach(header => {
-            let cell = document.createElement('td');
+            let cell = document.createElement('th');
             cell.innerText = `${header}`;
-            cell.style.textAlign = 'center';
-            cell.style.fontWeight = 'bold';
+            cell.style = this.#styles.th.join(' ');
             headerRow.appendChild(cell);
         });
 
@@ -162,10 +207,9 @@ class Pagination {
         let row = document.createElement('tr');
 
         keys.forEach(key => {
-            let cell = document.createElement('td');
+            let cell = document.createElement('th');
             cell.innerText = `${key.charAt(0).toUpperCase() + key.slice(1)}`;
-            cell.style.textAlign = 'center';
-            cell.style.fontWeight = 'bold';
+            cell.style = this.#styles.th.join(' ');
             row.appendChild(cell);
         });
 
@@ -181,6 +225,8 @@ class Pagination {
          */
         let pageRow = document.createElement('tr'),
             pageCell = document.createElement('td');
+
+        pageCell.style = this.#styles.td.join(' ');
 
         /**
          * Options Table Element
