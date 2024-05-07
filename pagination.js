@@ -34,6 +34,11 @@ class Pagination {
     #template;
 
     /**
+     * @param {HTMLElement} table
+     */
+    #table;
+
+    /**
      * @param {Number} pageCount
      */
     #pageCount = 1;
@@ -55,7 +60,7 @@ class Pagination {
      */
     #styles = {
         'table': [
-            'width: 100%;',
+            'width: 80%;',
             'border-collapse: collapse;'
         ],
         'tr': [
@@ -78,18 +83,39 @@ class Pagination {
      * @param {Object} class
      */
     #class = {
-        'table': [],
+        'table': [
+            'table',
+            'table-striped',
+            'table-bordered',
+            'table-hover'
+        ],
         'tr': [],
         'th': [],
         'td': []
     };
 
-    constructor(data, page_size, element, headers = null, styles = null) {
+    /**
+     * Class Overrirde Flag
+     */
+    #classFlag = false;
+
+    constructor(data, page_size, element, bootstrap = false, styles = null, headers = null) {
         this.#data = data;
         this.#pageSize = page_size;
         this.#element = document.querySelector(element);
         this.#pageCount = Math.ceil(data.length / this.#pageSize);
         this.#headers = headers;
+
+        if(bootstrap) {
+            this.#classFlag = true;
+
+            let bootstrapLink = document.createElement('link');
+
+            bootstrapLink.rel ='stylesheet';
+            bootstrapLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css';
+
+            document.head.appendChild(bootstrapLink);
+        }
 
         if(styles) {
             this.#styles = styles;
@@ -101,12 +127,18 @@ class Pagination {
             this.#cellCount = Object.keys(data[0]).length;
         }
 
-        this.#template = document.createElement('table');
-        this.#template.id = 'pagination-table';
-        this.#template.style = this.#styles.table.join(' ');
+        this.#table = document.createElement('table');
+        this.#table.id = 'pagination-table';
 
-        // ADD STYLE OVERRIDE
+        this.#template = document.createElement('tbody');
+        this.#template.id = 'pagination-table-body';
 
+        if(this.#classFlag) {
+            this.#table.classList = this.#class.table.join(' ');
+        } else {
+           this.#table.style = this.#styles.table.join(' '); 
+        }
+        
         this.render();
     }
 
@@ -145,7 +177,8 @@ class Pagination {
 
         this.packageOptions();
 
-        this.#element.appendChild(this.#template);
+        this.#table.appendChild(this.#template);
+        this.#element.appendChild(this.#table);
     }
 
     /**
@@ -245,6 +278,10 @@ class Pagination {
             this.previous(this.#currentPage - 1);
         });
 
+        if(this.#classFlag) {
+            previousButton.classList.add('btn', 'btn-primary');
+        }
+
         if(this.#currentPage <= 1) {
             previousButton.disabled = true;
         }
@@ -262,6 +299,10 @@ class Pagination {
         nextButton.addEventListener('click', () => {
             this.next(this.#currentPage + 1);
         });
+
+        if(this.#classFlag) {
+            nextButton.classList.add('btn', 'btn-success');
+        }
 
         if((this.#currentPage + 1) > this.#pageCount) {
             nextButton.disabled = true;
@@ -307,11 +348,13 @@ class Pagination {
 
             pageLink.innerText = i;
             pageLink.href = '#';
+            pageLink.style.color = 'black';
             
             if(i !== this.#currentPage) {
                 pageLink.onclick = () => { this.goTo(i) };
             } else {
                 pageLink.style.textDecoration = 'none';
+                pageLink.style.fontWeight = 'bold';
             }
             
             pageCell.appendChild(pageLink);
@@ -362,7 +405,7 @@ class Pagination {
      * Remove Table Contents
      */
     removeTable() {
-       document.querySelector('#pagination-table').innerHTML = '';
-       document.querySelector('#pagination-table').remove();
+       document.querySelector('#pagination-table-body').innerHTML = '';
+       document.querySelector('#pagination-table-body').remove();
     }
 }

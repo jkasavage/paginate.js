@@ -84,7 +84,43 @@
             }
         ];
 
-        let pagination = new Pagination(data, 5, '#root');
+        /**
+         * Custom Table Styling
+         */
+        let style = {
+            table: [
+                'border: 1px solid black;',
+                'border-collapse: collapse;',
+                'width: 100%;'
+            ],
+            th: [
+                'border: 1px solid black;',
+                'border-collapse: collapse;',
+                'padding: 8px;',
+                'text-align: center;'
+            ],
+            tr: [
+                'border: 1px solid black;',
+                'border-collapse: collapse;',
+                'padding: 8px;'
+            ],
+            td: [
+                'border: 1px solid black;',
+                'border-collapse: collapse;',
+                'padding: 8px;'
+            ]
+        };
+
+        let customHeaders = [
+            'id',
+            'name',
+            'gender'
+        ];
+        
+        //let pagination = new Pagination(data, 5, '#root'); // Default Table Styling
+        //let pagination = new Pagination(data, 5, '#root', false, style); // Custom Table Styling
+        //let pagination = new Pagination(data, 5, '#root', false, style, customHeaders) // Custom Table Headers
+        let pagination = new Pagination(data, 5, '#root', true); // Bootstrap Style Table
     </script>
 </body>
 </html>
